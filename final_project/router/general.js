@@ -7,10 +7,10 @@ const public_users = express.Router();
 
 public_users.post("/register", (req,res) => {
     const users = [];
-  
+
     const { username, password } = req.body;
 
-    const newUser = { username: 'kfredd', password: '1234' }; 
+    const newUser = { username, password }; 
     users.push(newUser); // Add the new user to the users array
 
     // Send success response
