@@ -95,7 +95,7 @@ public_users.get('/author/:author',function (req, res) {
 
 // Get all books based on title
 public_users.get('/title/:title',function (req, res) {
-    
+
     const title = req.params.title;
 
     const books = [
@@ -128,8 +128,36 @@ public_users.get('/title/:title',function (req, res) {
 
 //  Get book review
 public_users.get('/review/:isbn',function (req, res) {
-  //Write your code here
-  return res.status(300).json({message: "Yet to be implemented"});
+  // Retrieve the ISBN from the request parameters
+  const isbn = req.params.isbn;
+
+  // Sample array of book reviews (this would typically come from a database)
+  const reviews = [
+     
+
+      { isbn: '1234567890', title: "Things Fall Apart", author: "Chinua Achebe", review: "A cemented masterpiece in 2000's.", rating: 5 },
+      { isbn: '1234567892', title: "Fairy tales", author: "Hans Christian Andersen", reviews: "A poignant and gripping story.", rating: 4 },
+      { isbn: '1234567893', title: "The Divine Comedy", author: "Dante Alighieri", reviews: "Thought-provoking and chilling.", rating: 5 },
+      { isbn: '1234567894', title: "The Epic Of Gilgamesh", author: "Unknown", reviews: "A coming-of-age story that resonates.", rating: 4 },
+      { isbn: '1234567895', title: "The Book Of Job", author: "Unknown", reviews: "A coming-of-age story that flourish.", rating: 4 },
+      { isbn: '1234567896', title: "One Thousand and One Nights", author: "Unknown", reviews: "A great craftmanship resonates.", rating: 4 },
+      { isbn: '1234567897', title: "Nj\u00e1l's Saga", author: "Unknown", reviews: "An engineered master craft.", rating: 7 },
+      { isbn: '1234567898', title: "Pride and Prejudice", author: "Jane Austen", reviews: "A story that resonates.", rating: 6 },
+      { isbn: '1234567899', title: "Le P\u00e8re Goriot", author: "Honor\u00e9 de Balzac", reviews: "A reconaissance art work.", rating: 9 },
+      { isbn: '12345678910', title: "Molloy, Malone Dies", author: "Samuel Beckett","title": "Molloy, Malone Dies, The Unnamable, the trilogy", reviews: "A design of age.", rating: 5 },
+  ];
+
+  // Find reviews that match the specified ISBN
+  const bookReviews = reviews.filter(r => r.isbn === isbn);
+
+  // Check if any reviews were found
+  if (bookReviews.length > 0) {
+      // Send the reviews as a JSON response
+      res.json(bookReviews);
+  } else {
+      // If no reviews were found, send a 404 response
+      res.status(404).send({ message: 'No reviews found for this ISBN' });
+  }
 });
 
 module.exports.general = public_users;
