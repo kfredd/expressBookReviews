@@ -49,6 +49,21 @@ public_users.get('/',function (req, res) {
     res.send(JSON.stringify(books, null, 2));
 });
 
+const axios = require('axios');
+
+function fetchBooks() {
+    axios.get('https://juniorkuffou-5000.theianext-0-labs-prod-misc-tools-us-east-0.proxy.cognitiveclass.ai/')
+        .then(response => {
+            console.log('Books available:', response.data);
+        })
+        .catch(error => {
+            console.error('Error fetching books:', error);
+        });
+}
+
+// Call the function
+fetchBooks();
+
 // Get book details based on ISBN
 public_users.get('/isbn/:isbn',function (req, res) {
   // Retrieve the ISBN from the request parameters
@@ -81,6 +96,21 @@ public_users.get('/isbn/:isbn',function (req, res) {
       res.status(404).send({ message: 'Book not found' });
   }
  });
+
+ const axios = require('axios');
+
+function fetchBookDetails(isbn) {
+    axios.get(`https://juniorkuffou-5000.theianext-0-labs-prod-misc-tools-us-east-0.proxy.cognitiveclass.ai/isbn/${isbn}`)
+        .then(response => {
+            console.log('Book details:', response.data);
+        })
+        .catch(error => {
+            console.error('Error fetching book details:', error);
+        });
+}
+
+// Call the function with a specific ISBN
+fetchBookDetails('1234567890'); // Replace with the desired ISBN
   
 // Get book details based on author
 public_users.get('/author/:author',function (req, res) {
@@ -112,6 +142,21 @@ public_users.get('/author/:author',function (req, res) {
         res.status(404).send({ message: 'No books found for this author' });
     }
 });
+
+const axios = require('axios');
+
+function fetchBooksByAuthor(author) {
+    axios.get(`https://juniorkuffou-5000.theianext-0-labs-prod-misc-tools-us-east-0.proxy.cognitiveclass.ai/author/${author}`)
+        .then(response => {
+            console.log('Books by author:', response.data);
+        })
+        .catch(error => {
+            console.error('Error fetching books by author:', error);
+        });
+}
+
+// Call the function with a specific author
+fetchBooksByAuthor('George Orwell'); // Replace with the desired author's name
 
 // Get all books based on title
 public_users.get('/title/:title',function (req, res) {
@@ -145,6 +190,21 @@ public_users.get('/title/:title',function (req, res) {
         res.status(404).send({ message: 'No books found with this title' });
     }
 });
+
+const axios = require('axios');
+
+function fetchBookDetailsByTitle(title) {
+    axios.get(`https://juniorkuffou-5000.theianext-0-labs-prod-misc-tools-us-east-0.proxy.cognitiveclass.ai/title/${title}`)
+        .then(response => {
+            console.log('Book details by title:', response.data);
+        })
+        .catch(error => {
+            console.error('Error fetching book details by title:', error);
+        });
+}
+
+// Call the function with a specific title
+fetchBookDetailsByTitle('1984'); // Replace with the desired book title
 
 //  Get book review
 public_users.get('/review/:isbn',function (req, res) {
