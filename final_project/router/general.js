@@ -95,6 +95,7 @@ public_users.get('/author/:author',function (req, res) {
 
 // Get all books based on title
 public_users.get('/title/:title',function (req, res) {
+    
     const title = req.params.title;
 
     const books = [
@@ -112,15 +113,16 @@ public_users.get('/title/:title',function (req, res) {
     ];
 
    
-    const booksByTitle = books.filter(b => b.title.toLowerCase() === title.toLowerCase());
+    // Find books that match the specified title (case-insensitive)
+    const matchedBooks = books.filter(b => b.title.toLowerCase() === title.toLowerCase());
 
     // Check if any books were found
-    if (booksByTitle.length > 0) {
-        // Send the books by the author as a JSON response
-        res.json(booksByTitle);
+    if (matchedBooks.length > 0) {
+        // Send the matched books as a JSON response
+        res.json(matchedBooks);
     } else {
         // If no books were found, send a 404 response
-        res.status(404).send({ message: 'No books found for this title' });
+        res.status(404).send({ message: 'No books found with this title' });
     }
 });
 
