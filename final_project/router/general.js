@@ -31,8 +31,35 @@ public_users.get('/',function (req, res) {
 
 // Get book details based on ISBN
 public_users.get('/isbn/:isbn',function (req, res) {
-  //Write your code here
-  return res.status(300).json({message: "Yet to be implemented"});
+  // Retrieve the ISBN from the request parameters
+  const isbn = req.params.isbn;
+
+  // Sample array of books (this would typically come from a database)
+  const books = [
+      
+      { isbn: '1234567890', title: "Things Fall Apart", author: "Chinua Achebe", reviews: {} },
+      { isbn: '1234567892', title: "Fairy tales", author: "Hans Christian Andersen", reviews: {} },
+      { isbn: '1234567893', title: "The Divine Comedy", author: "Dante Alighieri", reviews: {} },
+      { isbn: '1234567894', title: "The Epic Of Gilgamesh", author: "Unknown", reviews: {} },
+      { isbn: '1234567895', title: "The Book Of Job", author: "Unknown", reviews: {} },
+      { isbn: '1234567896', title: "One Thousand and One Nights", author: "Unknown", reviews: {} },
+      { isbn: '1234567897', title: "Nj\u00e1l's Saga", author: "Unknown", reviews: {} },
+      { isbn: '1234567898', title: "Pride and Prejudice", author: "Jane Austen", reviews: {} },
+      { isbn: '1234567899', title: "Le P\u00e8re Goriot", author: "Honor\u00e9 de Balzac", reviews: {} },
+      { isbn: '12345678910', title: "Molloy, Malone Dies", author: "Samuel Beckett","title": "Molloy, Malone Dies, The Unnamable, the trilogy", reviews: {} },
+  ];
+
+  // Find the book with the matching ISBN
+  const book = books.find(b => b.isbn === isbn);
+
+  // Check if the book exists
+  if (book) {
+      // Send the book details as a JSON response
+      res.json(book);
+  } else {
+      // If not found, send a 404 response
+      res.status(404).send({ message: 'Book not found' });
+  }
  });
   
 // Get book details based on author
