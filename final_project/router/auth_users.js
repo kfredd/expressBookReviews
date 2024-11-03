@@ -41,8 +41,8 @@ regd_users.post("/login", (req,res) => {
 regd_users.put("/auth/review/:isbn", (req, res) => {
   // Retrieve the ISBN from the request parameters
   const isbn = req.params.isbn;
-  const { review } = req.query; // Get the review from query parameters
-  const username = req.user.username; // Assuming user info is stored in req.user from previous middleware
+  const { review } = req.query; 
+  const username = req.user.username; 
 
   // Validate input
   if (!review) {
@@ -67,6 +67,24 @@ regd_users.put("/auth/review/:isbn", (req, res) => {
       return res.status(201).send({ message: "Review added successfully." });
   }
 });
+
+// Delete a book review
+regd_users.delete("/auth/review/:isbn", (req, res) => {
+    
+    const isbn = req.params.isbn;
+    const username = req.user.username; // Assuming user info is stored in req.user from previous middleware
+
+    // Find the index of the review to be deleted
+    const reviewIndex = reviews.findIndex(r => r.isbn === isbn && r.username === username);
+
+    if (reviewIndex !== -1) {
+        // Review found, delete it
+        reviews.splice(reviewIndex, 1); // Remove the review from the array
+        return res.status(200).send({ message: "Review deleted successfully." });
+    } else {
+        return res.status(404).send({ message: "Review not found or you are not authorized to delete this review." });
+    }
+  });
 
 module.exports.authenticated = regd_users;
 module.exports.isValid = isValid;
