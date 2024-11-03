@@ -95,8 +95,33 @@ public_users.get('/author/:author',function (req, res) {
 
 // Get all books based on title
 public_users.get('/title/:title',function (req, res) {
-  //Write your code here
-  return res.status(300).json({message: "Yet to be implemented"});
+    const title = req.params.title;
+
+    const books = [
+
+      { isbn: '1234567890', title: "Things Fall Apart", author: "Chinua Achebe", reviews: {} },
+      { isbn: '1234567892', title: "Fairy tales", author: "Hans Christian Andersen", reviews: {} },
+      { isbn: '1234567893', title: "The Divine Comedy", author: "Dante Alighieri", reviews: {} },
+      { isbn: '1234567894', title: "The Epic Of Gilgamesh", author: "Unknown", reviews: {} },
+      { isbn: '1234567895', title: "The Book Of Job", author: "Unknown", reviews: {} },
+      { isbn: '1234567896', title: "One Thousand and One Nights", author: "Unknown", reviews: {} },
+      { isbn: '1234567897', title: "Nj\u00e1l's Saga", author: "Unknown", reviews: {} },
+      { isbn: '1234567898', title: "Pride and Prejudice", author: "Jane Austen", reviews: {} },
+      { isbn: '1234567899', title: "Le P\u00e8re Goriot", author: "Honor\u00e9 de Balzac", reviews: {} },
+      { isbn: '12345678910', title: "Molloy, Malone Dies", author: "Samuel Beckett","title": "Molloy, Malone Dies, The Unnamable, the trilogy", reviews: {} },
+    ];
+
+   
+    const booksByTitle = books.filter(b => b.title.toLowerCase() === title.toLowerCase());
+
+    // Check if any books were found
+    if (booksByTitle.length > 0) {
+        // Send the books by the author as a JSON response
+        res.json(booksByTitle);
+    } else {
+        // If no books were found, send a 404 response
+        res.status(404).send({ message: 'No books found for this title' });
+    }
 });
 
 //  Get book review
