@@ -6,8 +6,26 @@ const public_users = express.Router();
 
 
 public_users.post("/register", (req,res) => {
-  //Write your code here
-  return res.status(300).json({message: "Yet to be implemented"});
+    const users = [];
+    const { username, password } = req.body;
+
+    // Validate input
+    if (!username || !password) {
+        return res.status(400).send({ message: "Username and password are required." });
+    }
+
+    // Check if the username already exists
+    const existingUser = users.find(user => user.username === username);
+    if (existingUser) {
+        return res.status(400).send({ message: "Username already exists." });
+    }
+
+    // Register new user
+    const newUser = { username, password }; 
+    users.push(newUser); // Add the new user to the users array
+
+    // Send success response
+    res.status(201).send({ message: "User registered successfully." });
 });
 
 // Get the book list available in the shop
@@ -80,7 +98,7 @@ public_users.get('/author/:author',function (req, res) {
       { isbn: '12345678910', title: "Molloy, Malone Dies", author: "Samuel Beckett","title": "Molloy, Malone Dies, The Unnamable, the trilogy", reviews: {} },
     ];
 
-    // Initialize an array to hold books by the specified author
+    
     const booksByAuthor = books.filter(b => b.author.toLowerCase() === author.toLowerCase());
 
     // Check if any books were found
@@ -134,7 +152,6 @@ public_users.get('/review/:isbn',function (req, res) {
   // Sample array of book reviews (this would typically come from a database)
   const reviews = [
      
-
       { isbn: '1234567890', title: "Things Fall Apart", author: "Chinua Achebe", review: "A cemented masterpiece in 2000's.", rating: 5 },
       { isbn: '1234567892', title: "Fairy tales", author: "Hans Christian Andersen", reviews: "A poignant and gripping story.", rating: 4 },
       { isbn: '1234567893', title: "The Divine Comedy", author: "Dante Alighieri", reviews: "Thought-provoking and chilling.", rating: 5 },
