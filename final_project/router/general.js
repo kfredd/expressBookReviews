@@ -7,7 +7,15 @@ const public_users = express.Router();
 
 public_users.post("/register", (req,res) => {
     const users = [];
+  
     const { username, password } = req.body;
+
+    const newUser = { username: 'kfredd', password: '1234' }; 
+    users.push(newUser); // Add the new user to the users array
+
+    // Send success response
+    res.status(201).send({ message: "User registered successfully." });
+
 
     // Validate input
     if (!username || !password) {
@@ -20,12 +28,6 @@ public_users.post("/register", (req,res) => {
         return res.status(400).send({ message: "Username already exists." });
     }
 
-    // Register new user
-    const newUser = { username, password }; 
-    users.push(newUser); // Add the new user to the users array
-
-    // Send success response
-    res.status(201).send({ message: "User registered successfully." });
 });
 
 // Get the book list available in the shop
